@@ -31,7 +31,7 @@ bool scheduler_add_task(Task task)
             return true;
         }
     }
-    printf("Out of bounds in the task array\n");
+    printf("Out of bounds in the scheduler_add_task function\n");
     return false;
 }
 
@@ -43,6 +43,14 @@ void scheduler_delay_task(int i)
 void scheduler_end_task(Task *task)
 {
     task->active = false;
+}
+
+void scheduler_init()  {
+    for (size_t i = 0; i < MAX_TASKS; i++)
+    {
+        tasks[i].active = false;
+    }
+    
 }
 
 void scheduler_run()

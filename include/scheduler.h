@@ -11,13 +11,11 @@ typedef struct Task {
     bool active;
 } Task;
 
-bool scheduler_running;
-
 Task create_task(Task_Function f, int delay);
 bool scheduler_add_task(Task task);
 void scheduler_delay_task(int i);
 void scheduler_end_task(Task *task);
-void scheduler_init(int size);
+void scheduler_init();
 void scheduler_run();
 void scheduler_stop();
 
