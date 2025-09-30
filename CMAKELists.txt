@@ -1,0 +1,54 @@
+cmake_minimum_required(VERSION 3.13)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.2.0)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.2.0)
+set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
+if (EXISTS ${picoVscode})
+    include(${picoVscode})
+endif()
+
+set(PICO_BOARD pico2_w CACHE STRING "Board type")
+
+# Include the Pico SDK
+include(pico_sdk_import.cmake)
+
+# Project name and languages
+project(rtos_scheduler C CXX ASM)
+
+# Pico SDK initialization
+pico_sdk_init()
+
+# Add executable
+add_executable(rtos_scheduler
+    src/main.c
+    src/scheduler.c
+    src/tasks.c
+)
+
+# Create map/bin/hex/uf2 files
+pico_add_extra_outputs(rtos_scheduler)
+
+# Link libraries
+target_link_libraries(rtos_scheduler 
+    pico_stdlib
+    pico_cyw43_arch_none 
+)
+
+# Enable USB output, disable UART output
+pico_enable_stdio_usb(rtos_scheduler 1)
+pico_enable_stdio_uart(rtos_scheduler 0)
+
+# Include directories
+target_include_directories(rtos_scheduler PRIVATE 
+    ${CMAKE_CURRENT_LIST_DIR}/include
+)
