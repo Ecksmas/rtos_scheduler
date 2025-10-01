@@ -59,7 +59,8 @@ int main()
     Task blue = create_task(led_task_blue, 1000);
 
     scheduler_add_task(red);
-    scheduler_add_task(green);
+    scheduler_add_task
+    (green);
     scheduler_add_task(blue);
 
     scheduler_run();
