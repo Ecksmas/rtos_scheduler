@@ -4,16 +4,12 @@
 
 #include "scheduler.h"
 
-#define PIR_GPIO 15
 #define LED_RED_GPIO 14
 #define LED_GREEN_GPIO 13
 #define LED_BLUE_GPIO 12
 
 void gpio_setup(void)
 {
-    gpio_init(PIR_GPIO);
-    gpio_set_dir(PIR_GPIO, GPIO_IN);
-
     gpio_init(LED_RED_GPIO);
     gpio_init(LED_GREEN_GPIO);
     gpio_init(LED_BLUE_GPIO);
@@ -46,21 +42,12 @@ int main()
 
     scheduler_init();
 
-    while (cyw43_arch_init())
-    {
-        while (true)
-        {
-            printf("Cyw43 did not load, stopping pico");
-        }
-    }
-
     Task red = create_task(led_task_red, 1000);
     Task green = create_task(led_task_green, 1500);
     Task blue = create_task(led_task_blue, 1000);
 
     scheduler_add_task(red);
-    scheduler_add_task
-    (green);
+    scheduler_add_task(green);
     scheduler_add_task(blue);
 
     scheduler_run();
