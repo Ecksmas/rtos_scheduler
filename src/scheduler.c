@@ -9,8 +9,8 @@
 Task tasks[MAX_TASKS];
 bool scheduler_running = true;
 
-Task create_task(Task_Function f, int delay) {
-
+Task create_task(Task_Function f, int delay)
+{
     Task t;
     t.fptr = f;
     t.delay = delay;
@@ -27,7 +27,7 @@ bool scheduler_add_task(Task task)
         if (!tasks[i].active)
         {
             tasks[i] = task;
-            tasks[i].delay = 0; 
+            tasks[i].delay = 0;
             return true;
         }
     }
@@ -45,15 +45,15 @@ void scheduler_end_task(Task *task)
     task->active = false;
 }
 
-void scheduler_init()  {
+void scheduler_init()
+{
     for (size_t i = 0; i < MAX_TASKS; i++)
     {
         tasks[i].active = false;
     }
-    
 }
 
-void scheduler_run()
+void scheduler_tick_once()
 {
     while (scheduler_running)
     {
@@ -68,14 +68,30 @@ void scheduler_run()
             {
                 tasks[i].delay--;
             }
-
         }
-        sleep_ms(1);
     }
 }
 
-void scheduler_stop()
+void scheduler_run()
+{
+    while (scheduler_running)
+    {
+        scheduler_tick_once();
+        sleep_ms(1);
+    }
+
+}
+
+bool scheduler_stop()
 {
     if (scheduler_running)
+    {
         scheduler_running = false;
+        return true;
+    }
+    return false;
+}
+
+bool get_scheduler_running() {
+    return scheduler_running;
 }

@@ -16,7 +16,9 @@ bool scheduler_add_task(Task task);
 void scheduler_delay_task(int i);
 void scheduler_end_task(Task *task);
 void scheduler_init();
+void scheduler_tick_once();
 void scheduler_run();
-void scheduler_stop();
+bool scheduler_stop();
+bool get_scheduler_running();
 
 
