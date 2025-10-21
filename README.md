@@ -3,7 +3,7 @@
 ## Overview
 
 A lightweight cooperative RTOS style task scheduler written in C.
-Designed for embedded system such as microcontroller, it allows multiple periodic and delayed tasks to run in a time-sliced fashion without a real operating system.
+Designed for embedded systems such as a microcontroller, it allows multiple periodic and delayed tasks to run in a time-sliced fashion without a real operating system.
 
 ## Example
 

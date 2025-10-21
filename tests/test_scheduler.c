@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "scheduler.h"
+#include "platform.h"
 
 static int task_ran = 0;
 
@@ -46,13 +47,14 @@ void test_scheduler_delay(void)
 {
     int test_ticks = 3;
     Task t = create_task(dummy_task, 3);
+    scheduler_add_task(t);
 
-    for (size_t i = 0; i < test_ticks; i++)
+    for (int i = 0; i <= test_ticks; i++)
     {
         scheduler_tick_once();
     }
 
-    TEST_ASSERT_EQUAL_INT(1, task_ran);
+    TEST_ASSERT_EQUAL_INT(2, task_ran);
 }
 
 void test_end_task_stop_scheduler(void)

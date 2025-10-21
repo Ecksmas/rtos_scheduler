@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stddef.h>
-#include "pico/stdlib.h"
+#include "platform.h"
 
 #define MAX_TASKS 5
 
@@ -55,19 +55,16 @@ void scheduler_init()
 
 void scheduler_tick_once()
 {
-    while (scheduler_running)
+    for (size_t i = 0; i < MAX_TASKS; i++)
     {
-        for (size_t i = 0; i < MAX_TASKS; i++)
+        if (tasks[i].active && tasks[i].delay == 0)
         {
-            if (tasks[i].active && tasks[i].delay == 0)
-            {
-                tasks[i].fptr();
-                scheduler_delay_task(i);
-            }
-            else if (tasks[i].active && tasks[i].delay > 0)
-            {
-                tasks[i].delay--;
-            }
+            tasks[i].fptr();
+            scheduler_delay_task(i);
+        }
+        else if (tasks[i].active && tasks[i].delay > 0)
+        {
+            tasks[i].delay--;
         }
     }
 }
@@ -77,9 +74,8 @@ void scheduler_run()
     while (scheduler_running)
     {
         scheduler_tick_once();
-        sleep_ms(1);
+        platform_sleep_ms(1);
     }
-
 }
 
 bool scheduler_stop()
@@ -92,6 +88,7 @@ bool scheduler_stop()
     return false;
 }
 
-bool get_scheduler_running() {
+bool get_scheduler_running()
+{
     return scheduler_running;
 }

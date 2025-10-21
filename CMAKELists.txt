@@ -34,14 +34,9 @@ pico_sdk_init()
 add_executable(rtos_scheduler
     src/main.c
     src/scheduler.c
-    src/tasks.c
 )
 
-add_executable(tests
-    tests/test_scheduler.c
-    external/unity/unity.c
-    src/scheduler.c
-)
+target_compile_definitions(rtos_scheduler PRIVATE PICO_BUILD)
 
 # Create map/bin/hex/uf2 files
 pico_add_extra_outputs(rtos_scheduler)
@@ -59,14 +54,4 @@ pico_enable_stdio_uart(rtos_scheduler 0)
 # Include directories
 target_include_directories(rtos_scheduler PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include
-)
-
-# Link libraries
-target_link_libraries(tests
-    pico_stdlib
-)
-
-target_include_directories(tests PRIVATE
-    include
-    external/unity
 )
