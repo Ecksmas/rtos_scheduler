@@ -32,8 +32,13 @@ int main() {
 
 ## Testing
 
-Doctest is used in the testing of the project, some simple test to check that everything is running correctly.
+The Unity test library is used in the testing of the project, some simple test are created to check that everything is running correctly.
 
-To run tests:
-- cd build
-- ./runTests
+As the project is compiled for the pico and the tests are ran on the host machine there are two differents build folders.
+
+To be able to run and compile the tests navigate to the tests folder and compile with the commands:
+
+- cmake ..
+- cmake --build .
+
+Afterwards the tests.exe file should be located in the debug folder.
