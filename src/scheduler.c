@@ -37,6 +37,7 @@ bool scheduler_add_task(Task task)
 
 void scheduler_delay_task(int i)
 {
+    // Reset the delay once it has decremented to 0
     tasks[i].delay = tasks[i].period;
 }
 

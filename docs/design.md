@@ -55,6 +55,11 @@ void scheduler_end_task(Task *task);
 ```
 Marks a task as inactive, removing it from future execution.
 
+```
+void scheduler_tick_once();
+```
+Runs the tasks once within the schedule_run function.
+
 ### Scheduler Control
 
 ```
@@ -70,7 +75,7 @@ Starts the main scheduler loop and iterates through the tasks and execute active
 ```
 void scheduler_stop();
 ```
-Stops the scheduler loop by flipping a global variable.
+Stops the scheduler loop by flipping a global variable, should be used inside a task function.
 
 ### Scheduler Flow
 
